@@ -1,0 +1,251 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2b5876, #4e4376); /* Gradient Background */
+            margin: 0;
+            padding: 0;
+            background-image: url('{% static "image/index8.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            color: #f4f4f4;
+        }
+
+        .header-box {
+            background-color: #021427; /* Blue background for header */
+            color: white; /* White text color */
+            padding: 15px;
+            text-align: left; /* Align the text and buttons to the left */
+            border-radius: 2px;
+            margin: 0px auto;
+            max-width: 1500px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .header-box a {
+            background-color: #610808;
+            color: white;
+            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-right: 10px; /* Space between buttons */
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .header-box a:hover {
+            background-color: #442121;
+            transform: translateY(-2px);
+        }
+
+        .heading-box {
+            text-align: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .container {
+            max-width: 930px;
+            margin: 5px auto;
+            padding: 30px;
+            background-color: rgba(0, 0, 0, 0.7); /* Transparent background for contrast */
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px); /* Adding blur effect */
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 30px;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+
+        .form-group {
+            flex: 1;
+            padding: 13px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            background: linear-gradient(90deg, #000000, #241919, #1b090b, #020101);
+            color: rgb(255, 255, 255);
+            margin-right: 10px;
+        }
+
+        .form-group:last-child {
+            margin-right: 0px;
+            width: 90%;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 90%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .form-group input[type="file"] {
+            padding: 10px;
+            width: 90%;
+            background-color: #333;
+        }
+
+        .form-group input[type="submit"] {
+            background-color: #031a33;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 25px;
+            padding: 14px 30px;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .profile-image {
+            display: block;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .image-upload {
+            text-align: center;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+            }
+
+            .form-group {
+                margin-bottom: 10px;
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Box with "Profile" and "Home" Buttons on the Left -->
+    <div class="header-box">
+        <a href="/workprofile/">PROFILE</a>
+        <a href="/workhome/">HOME</a>
+    </div>
+
+    <!-- Heading Box for "UPDATE PROFILE" -->
+    <div class="heading-box">
+        <h1>UPDATE PROFILE</h1>
+    </div>
+
+    <!-- Edit Profile Form -->
+    <div class="container">
+        <form method="post" action="/w_proupdateu/" enctype="multipart/form-data" onsubmit="return validateForm()">
+            {% csrf_token %}
+
+            <div class="image-upload">
+                <!-- Profile Image -->
+                <img src="{{ image.url }}" alt="User Image" class="profile-image" height="150px" width="150px">
+            </div>
+
+            <!-- Form for updating user details -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="image">Profile Picture</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                </div>
+
+                <div class="form-group">
+                    <label for="workname">Workshop Name</label>
+                    <input type="text" id="workname" name="workname" value="{{ workname }}" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="{{ email }}" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phonenumber">Phone Number</label>
+                    <input type="tel" id="phonenumber" name="phonenumber" value="{{ phonenumber }}" pattern="[0-9]{10}" required title="Phone number must be 10 digits">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" value="{{ password }}" required minlength="6" title="Password must be at least 6 characters long">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="workaddress">Address</label>
+                    <input type="text" id="workaddress" name="workaddress" value="{{ workaddress }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="workregno">Registration No.</label>
+                    <input type="text" id="workregno" name="workregno" value="{{ workregno }}" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <input type="submit" value="Submit">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            // Password validation: check for minimum length
+            var password = document.getElementById('password').value;
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long.');
+                return false;
+            }
+
+            // Phone number validation: Check if it's exactly 10 digits
+            var phone = document.getElementById('phonenumber').value;
+            var phoneRegex = /^[0-9]{10}$/;
+            if (!phoneRegex.test(phone)) {
+                alert('Phone number must be exactly 10 digits.');
+                return false;
+            }
+
+            return true; // Form is valid
+        }
+    </script>
+</body>
+</html>

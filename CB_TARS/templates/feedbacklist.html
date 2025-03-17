@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            color: #000000;
+        }
+
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        td {
+            color: #000000;
+        }
+
+        table caption {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Admin Index Button Style */
+        .admin-index-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #420505;
+            color: white;
+            font-size: 16px;
+            text-decoration: none;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .admin-index-btn:hover {
+            background-color: #750606;
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Index Button on the Left -->
+    <a href="/adminindex/" class="admin-index-btn">Admin Home</a>
+
+    <h1>FEEDBACK LIST</h1>
+    <table>
+        <tr>
+            <th>FEEDBACK</th>
+            <th>RATING</th>
+            <th>DELETE</th>
+        </tr>
+        {% for u in feedback %}
+        <tr>
+            <td>{{ u.feedback_text }}</td>
+            <td>{{ u.rating }}</td>
+            <td><a href="/delfeedback/{{ u.id }}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

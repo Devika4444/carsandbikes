@@ -1,0 +1,243 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Posts List</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2b5876, #4e4376); /* Subtle gradient background */
+            margin: 0;
+            padding: 0;
+            background-image: url('{% static "image/sparereg7.jpg" %}');
+            background-size: 1425px 990px;
+            color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Header Box Styling */
+        .header-box {
+            background-color: #250202; /* Blue background for header */
+            color: white; /* White text color */
+            padding: 30px;
+            display: flex;
+            justify-content: space-between; /* Align links to the left and right */
+            align-items: center; /* Vertically center the items */
+            position: relative; /* To position the buttons */
+            width: 100%;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+        .header-box h1 {
+            margin: 0;
+            text-align: center;
+            flex: 1; /* Allow the title to take available space */
+        }
+        .header-box .custom-btn {
+            background: linear-gradient(90deg, #b30000, #750000); /* Darker blue gradient */
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 30px; /* Rounded corners */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            transition: background 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+            cursor: pointer;
+        }
+        .header-box .custom-btn:hover {
+            background: linear-gradient(90deg, #750000, #450000);
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+        }
+        .header-box .custom-btn a {
+            color: white;
+            text-decoration: none;
+        }
+        .header-box .custom-btn a:hover {
+            color: #e0f7fa;
+        }
+
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin-top: 100px; /* Add margin to prevent overlap with header */
+            padding: 0 5px;
+            width: 90%;
+            height: 65%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        /* Showpost Cards Grid */
+        .showpost-card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 5px;
+            margin-top: -60px;
+        }
+
+        .showpost-card {
+            background-color: #ffffff;
+            height: 120%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 5px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .showpost-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .showpost-card img {
+            width: 100%;
+            height: 60%;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .showpost-card h3 {
+            font-size: 1.5rem;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .showpost-card p {
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .showpost-card .price {
+            font-weight: bold;
+            color: #3b0404;
+            font-size: 1.2rem;
+        }
+
+        .showpost-card .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .actions a {
+            color: white;
+            padding: 4px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .actions .edit-btn {
+            background-color: #500505;
+        }
+
+        .actions .edit-btn:hover {
+            background-color: #860a0a;
+        }
+
+        .actions .delete-btn {
+            background-color: #5e0606;
+        }
+
+        .actions .delete-btn:hover {
+            background-color: #c0392b;
+        }
+
+        /* Empty message */
+        .empty-message {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #ffffff;
+        }
+
+        .custom-btn {
+            background: linear-gradient(90deg, #6b0505, #b30000); /* Blue gradient */
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 30px; /* Rounded corners */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            transition: background 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .custom-btn:hover {
+            background: linear-gradient(90deg, #770303, #660505);
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+        }
+        .custom-btn a {
+            color: white;
+            text-decoration: none;
+        }
+        .custom-btn a:hover {
+            color: #e0f7fa;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header Box with "Showroom Profile" -->
+    <div class="header-box">
+        <button class="btn btn-primary custom-btn">
+            <a href="/sparehome/">HOME</a>
+        </button>
+        <h1>MY POSTS</h1>
+        <button class="btn btn-primary custom-btn">
+            <a href="/spareposts/">ADD NEW POST</a>
+        </button>
+    </div>
+
+    <div class="container">
+         <!-- Show Post Cards -->
+        <div class="showpost-card-container">
+            {% for post in spare %}
+                <div class="showpost-card">
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="{{ post.productname }}">
+                    {% else %}
+                        <div class="no-image" style="background-color: #ddd; width: 100%; height: 200px; display: flex; justify-content: center; align-items: center;">
+                            <span>No Image</span>
+                        </div>
+                    {% endif %}
+                    <h3>{{ post.productname }}</h3>
+                    <p>{{ post.price }}</p>
+                    <p>{{ post.location }}</p>
+                    <p>{{ post.description|truncatewords:20 }}</p>
+                    <div class="actions">
+                        <a href="{% url 'edit_spareposts' post.id %}" class="edit-btn">Edit</a>
+                        <a href="{% url 'delspareposts' post.id %}" class="delete-btn" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-message">
+                    <p>No posts available.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>

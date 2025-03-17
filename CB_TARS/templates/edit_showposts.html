@@ -1,0 +1,292 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Show Post</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        /* Reset and body styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('{% static "image/showreg5.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        /* Header Box Styling */
+        .header-box {
+            background-color: #021325; /* Blue background for header */
+            color: white; /* White text color */
+            padding: 20px;
+            display: flex;
+            justify-content: space-between; /* Align links to the left and right */
+            align-items: center; /* Vertically center the items */
+            width: 100%;
+            max-width: 1500px;
+            position: sticky;
+            top: 0;
+            z-index: 10; /* Make sure it's on top of other content */
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-box h1 {
+            margin: 0;
+            text-align: center;
+            flex: 1;
+            font-size: 30px;
+            letter-spacing: 2px;
+        }
+
+        .header-box .custom-btn {
+            background: linear-gradient(90deg, #7a0000, #4e0101); /* Darker blue gradient */
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 30px; /* Rounded corners */
+            box-shadow: 0px 4px 6px rgba(3, 3, 3, 0.1); /* Subtle shadow */
+            transition: background 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+            cursor: pointer;
+        }
+
+        .header-box .custom-btn:hover {
+            background: linear-gradient(90deg, #750000, #450000);
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-box .custom-btn a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .header-box .custom-btn a:hover {
+            color: #e0f7fa;
+        }
+
+        /* Main container */
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+            padding: 30px;
+            margin-top: 40px; /* To prevent overlap with header */
+            backdrop-filter: blur(10px); /* Subtle blur effect */
+        }
+
+        /* Header for Edit Page */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            color: #f7f7f7;
+        }
+
+        .back-link {
+            font-size: 16px;
+        }
+
+        .back-link a {
+            color: #972727;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        .edit-title {
+            font-size: 32px;
+            color: #f7f7f7;
+            text-align: left;
+            border-bottom: 2px solid #f7f7f7;
+            padding-bottom: 10px;
+            margin-left: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-size: 18px;
+            color: #f7f7f7;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background-color: #f0f0f0;
+            font-size: 16px;
+            margin-bottom: 10px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #700606;
+            outline: none;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            height: 150px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #690707;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #8d0a0a;
+        }
+
+        .image-preview {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .image-preview img {
+            max-width: 200px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            .edit-title {
+                font-size: 26px;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+
+            .form-row .form-group {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Box with "Home" and "Add New Post" buttons at the top -->
+    <!-- <div class="header-box">
+        <button class="custom-btn">
+            <a href="/showpostslist/">BACK</a>
+        </button>
+        <h1>EDIT POST</h1>
+    </div> -->
+
+    <!-- Main Content Container -->
+    <div class="container">
+        <!-- Back Link and Edit Post Title -->
+        <div class="header">
+            <p class="back-link"><a href="/showpostslist/">Back to List</a></p>
+            <h2 class="edit-title">Edit Your Post</h2>
+        </div>
+
+        <!-- Form for Editing Post -->
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Image -->
+            <div class="form-group">
+                <label for="image">Image:</label>
+                <input type="file" name="image" id="image" class="form-control">
+                
+                {% if showposts.image %}
+                    <div class="image-preview">
+                        <p>Current Image:</p>
+                        <img src="{{ showposts.image.url }}" alt="Current Image">
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Form Row for Brand, Model, Price, Location -->
+            <div class="form-row">
+                <!-- Brand -->
+                <div class="form-group">
+                    <label for="brand">Brand:</label>
+                    <input type="text" name="brand" id="brand" class="form-control" value="{{ showposts.brand }}" required>
+                </div>
+
+                <!-- Model -->
+                <div class="form-group">
+                    <label for="model">Model:</label>
+                    <input type="text" name="model" id="model" class="form-control" value="{{ showposts.model }}" required>
+                </div>
+
+                <!-- Price -->
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="number" name="price" id="price" class="form-control" value="{{ showposts.price }}" required>
+                </div>
+
+                <!-- Location -->
+                <div class="form-group">
+                    <label for="location">Location:</label>
+                    <input type="text" name="location" id="location" class="form-control" value="{{ showposts.location }}">
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea name="description" id="description" class="form-control" required>{{ showposts.description }}</textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn">Update Post</button>
+        </form>
+    </div>
+
+</body>
+</html>

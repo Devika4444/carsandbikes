@@ -1,0 +1,439 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car and Bike Marketplace</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .container {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        h1, h2 {
+            color: #030303;
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        /* Navigation */
+        nav ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin-right: 20px;
+            position: relative;
+        }
+
+        nav ul li a {
+            font-size: 1.2rem;
+            color: #ffffff;
+        }
+
+        /* Dropdown menu hidden by default */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #000000;
+            list-style: none;
+            padding: 10px;
+            border-radius: 8px;
+            z-index: 10;
+        }
+
+        .dropdown-menu li a {
+            display: block;
+            padding: 8px;
+            color: #fff;
+            text-align: left;
+        }
+
+        /* Header */
+        header {
+            background-size: 1375px 590px;
+            background-color: #000000;
+            color: #000;
+            padding-top: 20px; /* Reduced padding for a more compact header */
+            padding-bottom: 20px;
+        }
+
+        /* Header Layout */
+        .header-container {
+            display: flex;
+            flex-direction: column; /* Stack header content vertically */
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+
+        .header-container nav {
+            width: 100%;
+            margin-bottom: 20px; /* Space between navigation and image section */
+        }
+
+        .header-container .image-container {
+            width: 100%;
+            height: 30%; /* Decreased height for the image container */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px; /* Space between navigation and image section */
+        }
+
+        .header-container .image-container img {
+            width: 33.33%; /* Three images side by side */
+            height: 100%; /* Ensure images fill the container's height */
+            object-fit: cover;
+            margin-right: 10px; /* Decrease space between images */
+        }
+
+        /* Optional: Remove the margin on the last image to prevent extra space */
+        .header-container .image-container img:last-child {
+            margin-right: 0;
+        }
+
+        /* Main Content Sections */
+        main {
+            padding: 40px 0;
+        }
+
+        .section {
+            background-image: url('{% static "dn1" %}');
+            background-color: #000000;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .section h2 {
+            color: #ffffff;
+        }
+
+        .section p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        .section img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 5px;
+        }
+         /* Actions and Book Now Button Styling */
+         .actions {
+            display: flex;
+            justify-content: flex-start; /* Align buttons side by side */
+            margin-top: 30px; /* Adjust margin for better spacing */
+            gap: 3px; /* Space between buttons */
+        }
+
+        .book-btn {
+            padding: 8px 25px;
+            border-radius: 4px;
+            margin-bottom: 20%;
+            text-align: center;
+            width: 120px;
+            height: 28px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            background-color: #5c0a0a;
+            color: white;
+        }
+
+        .book-btn:hover {
+            background-color: #100542;
+            transform: translateY(-2px);
+        }
+
+
+        /* Footer */
+        footer {
+            background-color: #720b0b;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+            }
+
+            nav ul li {
+                display: block;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            nav ul li a {
+                width: 100%;
+                text-align: center;
+            }
+
+            .section img {
+                max-width: 100%;
+                margin-top: 10px;
+            }
+
+            .section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-container .image-container {
+                width: 100%;
+                margin-top: 20px;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-container">
+            <!-- Navigation at the top -->
+            <nav>
+                <ul>
+                    <li><a href="{% url 'userprofile' %}">PROFILE</a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle">ADD SELL</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'carsell1' %}">CARS</a></li>
+                            <li><a href="{% url 'bikesell1' %}">BIKES</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle">ADD RENT</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'carrent1' %}">CARS</a></li>
+                            <li><a href="{% url 'bikerent' %}">BIKES</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle">SELL BOOKINGS</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'mybookingcar_S' %}">CARS</a></li>
+                            <li><a href="{% url 'mybookingbike_S' %}">BIKES</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle">RENT BOOKINGS</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'mybookingcar_R' %}">CARS</a></li>
+                            <li><a href="{% url 'mybookingbike_R' %}">BIKES</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle">SERVICES BOOKINGS</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'mybookingworkshop' %}">WORKSHOPS</a></li>
+                            <li><a href="{% url 'mybookingshowroom' %}">SHOWROOMS</a></li>
+                            <li><a href="/mybookingtestdrive/" >TESTDRIVES</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle">MAP</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'map' %}">FUEL STATIONS</a></li>
+                            <li><a href="/show_workshop_map/">WORKSHOPS</a></li>
+                        </ul>
+                    </li>
+                   
+                    <li><a href="{% url 'userfeedback_rate' %}">FEEDBACK</a></li>
+                    <li><a href="{% url 'ulogout' %}">LOGOUT</a></li>
+                </ul>
+            </nav>
+
+            <!-- Image Section -->
+            <div class="image-container">
+                <img src="{% static 'image/white porsche aesthetic (1).jpg' %}" alt="Car">
+                <img src="{% static 'image/index24.jpg' %}" alt="Bike">
+                <img src="{% static 'image/white porsche aesthetic.jpg' %}" alt="Service">
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content (sections for buy/rent/sell) -->
+    <main>
+
+        <!-- Buy Cars Section (Text Left, Image Right) -->
+        <section id="buy-cars" class="section">
+            <div class="section-text">
+                <h2><center>BUY CARS</center></h2>
+                <p>Explore cars for sale, easily book your car, and complete your payment securely all in one place.</p>
+                <div class="actions">
+                    <a href="{% url 'bookcarsell' %}" class="book-btn">BOOK</a>
+                </div>
+            </div>
+            <div class="section-image">
+                <img src="{% static 'image/index3.jpg' %}" alt="Buy Cars">
+                <div class="diagonal-box"></div> <!-- Small diagonal box next to the image -->
+            </div>
+        </section>
+        <!-- Sell Bikes Section (Text Left, Image Right) -->
+
+        <section id="bike-sell" class="section">
+            <div class="section-image">
+                <img src="{% static 'image/index5.jpg' %}" alt="Sell Bikes">
+                <div class="diagonal-box"></div> <!-- Small diagonal box next to the image -->
+            </div>
+            <div class="section-text">
+                <h2><center>BUY BIKES</center></h2>
+                <p>Explore bikes for sale, easily book your bike, and complete your payment securely all in one place.</p>
+                <div class="actions">
+                    <a href="{% url 'bookbikesell' %}" class="book-btn">BOOK</a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Rent Cars Section (Image Left, Text Right) -->
+        <section id="car-rent" class="section">
+            <div class="section-text">
+                <h2><center>RENT CARS</center></h2>
+                <p>Discover cars available for rent, easily book your car, and make secure payments all in one place.</p>
+                <div class="actions">
+                    <a href="{% url 'bookcarrent' %}" class="book-btn">BOOK</a>
+                </div>
+            </div>
+            <div class="section-image">
+                <img src="{% static 'image/index4.jpg' %}" alt="Rent Cars">
+                <div class="diagonal-box"></div> <!-- Small diagonal box next to the image -->
+            </div>
+        </section>
+        
+        <!-- Rent Bikes Section (Image Left, Text Right) -->
+        <section id="bike-rent" class="section">
+            <div class="section-image">
+                <img src="{% static 'image/index6.jpg' %}" alt="Rent Bikes">
+                <div class="diagonal-box"></div> <!-- Small diagonal box next to the image -->
+            </div>
+            <div class="section-text">
+                <h2><center>RENT BIKES</center></h2>
+                <p>Discover bikes available for rent, easily book your bike, and make secure payments all in one place.</p>
+                <div class="actions">
+                    <a href="{% url 'bookbikerent' %}" class="book-btn">BOOK</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Workshops Section (Text Left, Image Right) -->
+        <section id="workshops" class="section">
+            <div class="section-text">
+                <h2><center>WORKSHOPS</center></h2>
+                <p>Find local workshops for vehicle maintenance services. We offer services for vehicles.
+					Book your service now and keep your vehicle in top condition with our trusted professionals.</p>
+                <div class="actions">
+                    <a href="{% url 'user_worklist' %}" class="book-btn">WORKSHOPS</a>
+                </div>
+            </div>
+            </div>
+            <div class="section-image">
+                <img src="{% static 'image/index8.jpg' %}" alt="Workshops">
+                <div class="diagonal-box"></div> <!-- Small diagonal box next to the image -->
+            </div>
+        </section>
+
+        <!-- Showrooms Section (Image Left, Text Right) -->
+        <section id="showrooms" class="section">
+            <div class="section-image">
+                <img src="{% static 'image/index9.jpg' %}" alt="Showrooms">
+                <div class="diagonal-box"></div> <!-- Small diagonal box next to the image -->
+            </div>
+            <div class="section-text">
+                <h2><center>SHOWROOMS</center></h2>
+                <p>Visit our network of showrooms for the latest cars and bikes. Our collection of vehicles is updated regularly. Book services and testdrrives.</p>
+                <div class="actions">
+                    <a href="{% url 'user_showlist' %}" class="book-btn">SHOWROOMS</a>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <!-- Spare Parts Section (Text Left, Image Right) -->
+        <section id="spareparts" class="section">
+            <div class="section-text">
+                <h2><center>SPARE PARTS</center></h2>
+                <p>Explore spare parts shops and  their collections for high-quality vehicle parts and accessories.</p>
+                <div class="actions">
+                    <a href="{% url 'user_sparelist' %}" class="book-btn">SPAREPARTS</a>
+                </div>
+            </div>
+               <!-- Car Actions (Book Now Button) -->
+           
+            <div class="section-image">
+                <img src="{% static 'image/index11.jpg' %}" alt="Spare Parts">
+                <div class="diagonal-box"></div> <!-- Small diagonal box next to the image -->
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; AUTO-FLEX</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Toggle dropdown visibility on click
+            $('.dropdown-toggle').click(function(e) {
+                var dropdownMenu = $(this).siblings('.dropdown-menu');
+                $('.dropdown-menu').not(dropdownMenu).slideUp(); // Hide other dropdowns
+                dropdownMenu.stop(true, true).slideToggle(); // Toggle the clicked dropdown
+                e.stopPropagation(); // Prevent event from bubbling up to document
+            });
+
+            // Close dropdowns if clicked outside
+            $(document).click(function() {
+                $('.dropdown-menu').slideUp();
+            });
+
+            // Prevent closing of dropdown when clicking inside the dropdown
+            $('.dropdown').click(function(e) {
+                e.stopPropagation();
+            });
+        });
+    </script>
+
+</body>
+</html>

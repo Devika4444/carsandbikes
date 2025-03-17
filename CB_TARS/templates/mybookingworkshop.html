@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings</title>
+    <link rel="stylesheet" href="your-stylesheet.css">
+    <style>
+        /* Global Styles */
+        body {
+            background-image: url('{% static "image/MuchaTseBle.jpg" %}');
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #000000;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Container Styles */
+        .header-container {
+            display: flex;
+            justify-content: space-between; /* Aligns button to left and heading to center */
+            align-items: center;
+            background-color: #130f0f;
+            color: rgb(255, 255, 255);
+            opacity: 0.8;
+            font-weight: bold;
+            padding: 20px 30px;
+            font-size: 1.3em;
+        }
+
+        .header-container h1 {
+            font-size: 2.5em;
+            text-align: center;
+            flex-grow: 1; /* Makes heading take remaining space */
+        }
+
+        .custom-btn {
+            background: linear-gradient(90deg, #640f0f, #b83a44, #a03941, #690e0e);
+            border: none;
+            color: rgb(254, 254, 255);
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 12px;
+            box-shadow: 0px 4px 6px rgba(22, 24, 126, 0.1);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            width: 10%;
+            text-align: center;
+        }
+
+        .custom-btn a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .custom-btn:hover {
+            background: linear-gradient(90deg, #b83a44, #a03941, #690e0e, #640f0f);
+            box-shadow: 0px 6px 10px rgba(22, 24, 126, 0.2);
+        }
+
+        /* Main Heading for the body container */
+        .workshop-services-heading {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 36px;
+            font-weight: 700;
+            color: #000000;  /* Dark Red Color */
+            letter-spacing: 1px;
+            text-transform: uppercase;  /* Capitalize the heading */
+        }
+
+        /* Table Styles */
+        table {
+            width: 90%;
+            align-items: center;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-left: 50px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            font-size: 16px;
+            border: 1px solid #e0e0e0;
+            transition: background-color 0.3s;
+        }
+
+        th {
+            background-color: #7e1010;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        td {
+            background-color: #fafafa;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .approved {
+            background-color: #28a745;
+        }
+
+        .pending {
+            background-color: #740f0f;
+            color: #ffffff;
+        }
+
+        /* No bookings message */
+        .no-bookings-message {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 18px;
+            color: #888;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .bookings-container {
+                width: 95%;
+                padding: 20px;
+            }
+
+            .workshop-services-heading {
+                font-size: 28px;
+            }
+
+            th, td {
+                font-size: 14px;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <button class="custom-btn">
+            <a href="/home/">HOME</a>
+        </button>
+        <h1>BOOKED WORKSHOP SERVICES</h1>
+    </div>
+
+    <div class="bookings-table-container">
+        {% if bookings %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Service Name</th>
+                        <th>Price Range</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                        <tr>
+                            <input type="hidden" name="cid" class="cid" value="{{ booking.car.id }}">
+                            <input type="hidden" name="amount" class="amount" value="{{ booking.car.price }}">
+                            <td>{{ booking.services.services }}</td>
+                            <td>{{ booking.services.price_range }}</td>
+                            <td>{{ booking.date }}</td>
+                            {% if booking.approval_status == 'approved' %}
+                                <td><span class="status-badge approved">Request Approved</span></td>
+                            {% else %}
+                                <td><span class="status-badge pending">Pending</span></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="no-bookings-message">
+                <p>You have no bookings yet.</p>
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>

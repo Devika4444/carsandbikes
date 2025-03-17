@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Posts List</title>
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+            padding: 30px;
+        }
+
+        /* Header Container Styling */
+        .header-container {
+            background-color: #4b0505; /* Green background */
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between; /* Aligns content to both sides */
+            align-items: center;
+        }
+
+        .header-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Styling the buttons */
+        .home-link, .btn {
+            text-decoration: none;
+            background-color: #640606;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .home-link:hover, .btn:hover {
+            background-color: #800808;
+        }
+
+        /* Container for the list of show posts */
+        .showposts-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .showpost-item {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .showpost-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .showpost-item img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .showpost-item h3 {
+            font-size: 1.5rem;
+            color: #000000;
+        }
+
+        .showpost-item p {
+            color: #000000;
+            margin: 5px 0;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            color: #880909;
+        }
+
+        .description {
+            font-size: 1rem;
+            color: #000000;
+        }
+
+        .location {
+            font-size: 1rem;
+            color: #ff0000;
+        }
+
+        /* Styling for the buttons */
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container with Back Button on the Left -->
+    <div class="header-container">
+        <!-- Back to Home Button -->
+        <div>
+            <a href="/user_showlist/" class="home-link">Back</a>
+        </div>
+        <h1>SHOWROOM POSTS</h1>
+        <div></div> <!-- Empty div to maintain layout alignment -->
+    </div>
+
+    <!-- Show Posts List -->
+    <div class="showposts-container">
+        {% for post in showposts %}
+            <div class="showpost-item">
+                <!-- Image -->
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="{{ post.brand }} {{ post.model }}">
+                {% else %}
+                    <img src="/static/images/default-placeholder.jpg" alt="No Image Available">
+                {% endif %}
+                
+                <!-- Brand and Model -->
+                <h3>{{ post.brand }} - {{ post.model }}</h3>
+
+                <!-- Price -->
+                <p class="price">Price: {{ post.price }}</p>
+
+                <!-- Location -->
+                <p class="location"><strong>Location:</strong> {{ post.location }}</p>
+
+                <!-- Description -->
+                <p class="description">{{ post.description }}</p>
+
+                <!-- Book Test Drive Button -->
+                <div class="btn-container">
+                    <a href="/booknow_testdrive/{{ post.id }}/" class="btn">Book Test Drives</a>
+                </div>
+            </div>
+        {% empty %}
+            <p>No show posts available.</p>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

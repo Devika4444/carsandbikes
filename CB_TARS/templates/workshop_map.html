@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Nearest Vehicle Service Stations</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        #map { height: 500px; width: 100%; margin-top: 10px; }
+        button, input { padding: 10px; font-size: 16px; margin-bottom: 10px; }
+        
+        /* Home Button Styling */
+        .home-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #6b0000; /* Dark Red */
+            color: white;
+            font-size: 16px;
+            text-decoration: none;
+            border-radius: 4px;
+            border: none;
+        }
+
+        .home-button:hover {
+            background-color: #461010;
+        }
+    </style>
+</head>
+<body>
+    <a href="/home/" class="home-button">Home</a> <!-- Home Button -->
+
+    <h2>Find Nearest Vehicle Service Stations</h2>
+    
+    <!-- Button to get user's current location -->
+    <button id="findCurrentLocation">Find Nearest Service Stations</button>
+
+    <div id="map"></div>
+
+    <script>
+        var map = L.map('map').setView([0, 0], 2);  // Default view at [0,0], zoom level 2
+        var userMarker;
+        var serviceStationMarkers = [];
+
+        // Add OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Function to get current location of the user
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    updateLocation(lat, lon);
+                }, error => {
+                    alert("Unable to retrieve your location. Please allow location access.");
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        // Function to update user location on the map
+        function updateLocation(lat, lon) {
+            console.log("User's Location:", lat, lon);
+            map.setView([lat, lon], 14);  // Zoom in on user's location
+
+            if (userMarker) {
+                map.removeLayer(userMarker);  // Remove previous user marker
+            }
+
+            userMarker = L.marker([lat, lon]).addTo(map)
+                .bindPopup("<b>You are here</b>").openPopup();
+
+            // Display dummy service stations near the user's location
+            displayDummyServiceStations(lat, lon);
+        }
+
+        // Function to display dummy service stations near the user
+        function displayDummyServiceStations(lat, lon) {
+            // Hardcoded dummy service stations around the user's location
+            const dummyStations = [
+                { lat: lat + 0.001, lon: lon + 0.001 },
+                { lat: lat - 0.002, lon: lon + 0.002 },
+                { lat: lat + 0.003, lon: lon - 0.003 },
+                { lat: lat - 0.001, lon: lon - 0.001 },
+                { lat: lat + 0.004, lon: lon - 0.004 }
+            ];
+
+            serviceStationMarkers.forEach(marker => map.removeLayer(marker));  // Remove previous markers
+            serviceStationMarkers = [];
+
+            dummyStations.forEach(station => {
+                let marker = L.marker([station.lat, station.lon]).addTo(map)
+                    .bindPopup("<b>Workshop</b>"); // No names, just "Workshop"
+                serviceStationMarkers.push(marker);
+            });
+        }
+
+        // Event listener for button click to get the current location and show dummy stations
+        document.getElementById("findCurrentLocation").addEventListener("click", () => {
+            getCurrentLocation();  // Get the user's current location
+        });
+    </script>
+</body>
+</html>

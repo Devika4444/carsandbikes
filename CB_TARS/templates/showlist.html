@@ -1,0 +1,78 @@
+{% extends 'adminindex.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:hover {
+            background-color: #fff;
+        }
+        img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>SHOWROOM NAME</th>
+            <th>EMAIL</th>
+            <th>PHONE NUMBER</th>
+            <th>SHOWROOM ADDRESS</th>
+            <th>SHOWROOM REGISTRATION NO</th>
+            <th>Image</th>
+            <th>DELETE</th>
+        </tr>
+        {% for u in show %}
+        <tr>
+            <td>{{u.showname}}</td>
+            <td>{{u.email}}</td>
+            <td>{{u.phonenumber}}</td>
+            <td>{{u.showaddress}}</td>
+            <td>{{u.showregno}}</td>
+            <td>{{u.image}}</td>
+            <td><a href="/delshow/{{u.id}}">Delete</a></td>
+        </tr>
+        <tr>
+            <td>
+            <form method="post" action="{% url 'update_status4' %}">
+                {% csrf_token %}
+                <input type="hidden"name="email"value="{{u.email}}">
+                <select name="status">
+                    <option value="approved"{% if u.status == 'approved' %}selected{% endif %}>Approved</option>
+                    <option value="rejected"{% if u.status == 'rejected' %}selected{% endif %}>Rejected</option>
+                </select>
+                <button type="submit">Update status</button>
+            </form>
+            </td>
+         </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock %}

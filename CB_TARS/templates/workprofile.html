@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop Profile</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2b5876, #4e4376); /* Subtle gradient background */
+            margin: 0;
+            padding: 0;
+            background-image: url('{% static "image/index8.jpg" %}'); 
+            background-size: 1425px 990px;
+            color: #f4f4f4;
+        }
+        .header-box {
+            background-color: #021427; /* Blue background for header */
+            color: white; /* White text color */
+            padding: 6px;
+            text-align: center;
+            border-radius: 2px;
+            margin: 0px auto;
+            max-width: 1500px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 10px auto;
+            padding: 50px;
+            background-color: rgba(0, 0, 0, 0.8); /* Set background color with opacity */
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(70, 4, 4, 0.2);
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: #b0bec5;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="number"],
+        .form-group input[type="password"],
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #292929;
+            color: #ffffff;
+            font-size: 16px;
+        }
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="number"]:focus,
+        .form-group input[type="password"]:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+        }
+        .form-group input[type="submit"] {
+            background-color: #031a33;
+            color: #fff;
+            border: none;
+            padding: 14px 30px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .form-group input[type="submit"]:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        .profile-image {
+            display: block;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            border: 4px solid #ffffff;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+        }
+        .custom-btn {
+            background: linear-gradient(90deg, #0f0138, #0097a7); /* Aqua gradient */
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 30px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .custom-btn:hover {
+            background: linear-gradient(90deg, #0097a7, #00838f);
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+        }
+        .custom-btn a {
+            color: white;
+            text-decoration: none;
+        }
+        .custom-btn a:hover {
+            color: #e0f7fa;
+        }
+        .text-end {
+            text-align: right;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Box with "Workshop Profile" -->
+    <div class="header-box">
+        <h1>WORKSHOP PROFILE</h1>
+        <button class="btn btn-primary custom-btn">
+            <a href="/workhome/">Home</a>
+        </button>
+        </div>
+    </div>
+  
+    <!-- Workshop Profile Form -->
+    <div class="container">
+        <!-- Profile image displayed above the form -->
+        <img src="{{image.url}}" alt="Workshop Image" class="profile-image" height="150px" width="150px">
+        
+        <!-- Form for updating work profile -->
+        <form method="post" action="/w_updateprou/" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="workname">Workshop Name</label>
+                <input type="text" id="workname" name="workname" value="{{workname}}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" value="{{email}}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="phonenumber">Phone Number</label>
+                <input type="number" id="phonenumber" name="phonenumber" value="{{phonenumber}}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="workaddress">Workshop Address</label>
+                <input type="text" id="workaddress" name="workaddress" value="{{workaddress}}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="workregno">Work Reg No</label>
+                <input type="text" id="workregno" name="workregno" value="{{workregno}}" readonly>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Update">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

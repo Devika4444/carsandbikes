@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Service</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* Global styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('{% static "image/index9.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Container with Back and Home Buttons */
+        .header-container {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            color: white;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container a {
+            background-color: #740808;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .header-container a:hover {
+            background-color: #921010;
+        }
+
+        h1 {
+            color: white;
+            font-size: 2.5em;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        /* Form Container */
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            color: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #333;
+            color: white;
+        }
+
+        .form-group button {
+            background-color: #770c0c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-group button:hover {
+            background-color: #7a0b0b;
+        }
+
+        .form-group a {
+            color: #fff;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 1em;
+            text-align: center;
+        }
+
+        .form-group a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container with Back and Home Buttons -->
+    <div class="header-container">
+        <a href="{% url 'showhome' %}">Home</a>
+        <a href="{% url 's_services_list' %}">Back to Service List</a>
+        <h1>Edit Service</h1>
+    </div>
+
+    <!-- Form Container -->
+    <div class="container">
+        <form method="POST" action="{% url 'edit_service1' service_id=service.service_id %}">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="service">Service Name:</label>
+                <input type="text" id="service" name="service" value="{{ service.services }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="price_range">Price Range:</label>
+                <input type="text" id="price_range" name="price_range" value="{{ service.price_range }}" required>
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Update Service</button>
+            </div>
+        </form>
+
+        <div class="form-group">
+            <a href="{% url 's_services_list' %}">Cancel and Go Back</a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,244 @@
+{% load static %}
+<body>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 20px;
+            padding: 0px;
+        }
+
+        .profile-pic-frame {
+            border: 1px solid #f5f3f3;
+            border-radius: 10px;
+            background-image: url('{% static "\image\propic7.jpg" %}');
+            padding: 40px;
+            margin: 0px;
+            width: 350px;
+            height: 560px;
+            text-align: center;
+            flex: 0 0 auto;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .profile-details-frame {
+            border: 1px solid #000000;
+            border-radius: 10px;
+            background-image: url('{% static "\image\propic4.jpg" %}');
+            padding: 30px;
+            margin: 0px;
+            width: 400px;
+            height: 790px;
+            text-align: left;
+            flex: 0 0 auto;
+            font-family: "Georgia", sans-serif;
+            font-size: 18px;
+            color: #333;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .detail-box {
+            border: 8px solid #faf6f6;
+            padding: 26px;
+            border-top: #dad2d2;
+            border-left: #9c1e1e;
+            border-radius: 5px;
+            color: rgb(255, 255, 255);
+            margin: 35px 0;
+            background: linear-gradient(90deg, #5f0d0d, #660e16);
+            font-size: large;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-box1 {
+            color: rgb(255, 255, 255);
+            text-align: center;
+            padding: 10px;
+            width: 270px;
+            background-image: url('{% static "\image\propic5.jpg" %}');
+            font-size: xx-large;
+            border-radius: 5px;
+        }
+
+        .btn-container-frame {
+            border: 1px solid #160101;
+            border-radius: 10px;
+            background-image: url('{% static "\image\propic5.jpg" %}');
+            padding: 30px;
+            margin: 0px;
+            width: 400px;
+            height: auto;
+            text-align: center;
+            flex: 0 0 auto;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .pro-img img {
+            padding: 15px;
+            width: 220px;
+            height: 220px;
+            max-width: 90%;
+            border-radius: 100%;
+            border: 5px solid #000000;
+            box-shadow: 0px 4px 8px rgba(148, 12, 12, 0.1);
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 50px;
+            gap: 20px;
+        }
+
+        .custom-btn {
+            background: linear-gradient(90deg, #640f0f, #b83a44, #a03941, #690e0e);
+            border: none;
+            color: rgb(254, 254, 255);
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 40px;
+            box-shadow: 0px 4px 6px rgba(22, 24, 126, 0.1);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            margin: 10px 0;
+            position: relative;
+            width: 100%;
+        }
+
+        .custom-btn:hover {
+            background: linear-gradient(90deg, #e9e8de, #8f1111);
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .custom-btn a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            display: block;
+            padding: 15px 0;
+        }
+
+        /* SELL button and dropdown options styling */
+        .sell-container {
+            background: linear-gradient(90deg, #640f0f, #b83a44, #a03941, #690e0e);
+            border: none;
+            color: rgb(254, 254, 255);
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 40px;
+            box-shadow: 0px 4px 6px rgba(22, 24, 126, 0.1);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            margin: 10px 0;
+            position: relative;
+            width: 90%;
+        }
+
+        .sell-btn:hover {
+            background: linear-gradient(90deg, #e9e8de, #8f1111);
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .sell-options {
+            display: none;
+            position: absolute;
+            top: 80%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #581d20;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+            width: 57%;
+        }
+
+        .sell-container:hover .sell-options {
+            display: flex;
+            opacity: 1;
+        }
+
+        .sell-option {
+            background-color: #1d0b0c;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: large;
+            border-radius: 2px;
+            margin: 3px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        .sell-option:hover {
+            background-color: #682727;
+        }
+    </style>
+
+    <div class="container">
+        <!-- Profile Details Frame -->
+        <div class="profile-details-frame">
+            <div class="detail-box1">PROFILE INFO</div><br>
+            <div class="detail-box">Email: {{email}}</div>
+            <div class="detail-box">Bio: {{bio}}</div>
+            <div class="detail-box">Phone No: {{phonenumber}}</div>
+            <div class="detail-box">Place: {{place}}</div>
+            <div class="detail-box">Pincode: {{pincode}}</div>
+        </div>
+
+        <!-- Profile Picture Frame -->
+        <div class="profile-pic-frame">
+            <div class="pro-img"><img src="{{ image.url }}" alt="user"></div><br><br><br>
+            <div class="sell-option">Username: {{username}}</div>
+        </div>
+
+        <!-- Button Frame -->
+        <div class="btn-container-frame">
+            <div class="btn-container">
+                <button class="custom-btn">
+                    <a href="/home/">HOME</a>
+                </button>
+                <button class="custom-btn">
+                    <a href="/updateprou/">UPDATE</a>
+                </button>
+                <button class="custom-btn">
+                    <a href="/transactions/">TRANSACTIONS</a>
+                </button>
+                <button class="custom-btn">
+                    <a href="/approved-users-payment-status/">RECEIVED TRANSACTIONS</a>
+                </button>
+
+                <!-- SELL Button with Car/Bike Hover Dropdown -->
+                <div class="sell-container">
+                    <button class="sell-container">SELL</button>
+                    <div class="sell-options">
+                        <a href="/carselllist/" class="sell-option">Cars</a>
+                        <a href="/bikeselllist/" class="sell-option">Bikes</a>
+                    </div>
+                </div>
+
+                <div class="sell-container">
+                    <button class="sell-container">RENT</button>
+                    <div class="sell-options">
+                        <a href="/carrentlist/" class="sell-option">Cars</a>
+                        <a href="/bikerentlist/" class="sell-option">Bikes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

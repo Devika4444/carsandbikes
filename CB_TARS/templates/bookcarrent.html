@@ -1,0 +1,373 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rent</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background-color: #570707; /* Dark Red / Cherry Red */
+            color: #fff;
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between; /* Space between Home button and title */
+            align-items: center;
+            padding-left: 20px; /* Ensure space on the left for home button */
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem; /* Larger heading size */
+            text-align: center;
+            flex-grow: 1; /* Make the title take up the remaining space */
+            text-align: center;
+        }
+
+        .home-link {
+            font-size: 1.2rem;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            background-color: #851f1f; /* Darker Red */
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .home-link:hover {
+            background-color: #4C0000; /* Even Darker Red */
+        }
+
+        /* Main Content */
+        main {
+            padding: 40px;
+        }
+
+        .section {
+            background-color: #fff;
+            margin-bottom: 20px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #550b0b; /* Dark Red */
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Search and Filter Section */
+        .search-container {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .search-container input {
+            width: 80%;
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-buttons {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .filter-buttons button {
+            padding: 10px 20px;
+            background-color: #5c0a0a; /* Dark Red */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .filter-buttons button:hover {
+            background-color: #530808; /* Darker shade of Red */
+        }
+
+        /* Car Listings */
+        .car-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .car-item {
+            background-color: #fff;
+            width: 350px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            margin: 10px;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: auto; /* Adjusted height to auto to accommodate content */
+        }
+
+        .car-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .sold-out {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #5c0d0d;
+            color: white;
+            padding: 5px 15px;
+            font-weight: bold;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1rem;
+            z-index: 10;
+        }
+
+        .car-image-container {
+            width: 100%;
+            height: 250px; /* Increased height for image */
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f7f7f7;
+        }
+
+        .car-image {
+            width: auto;
+            height: 100%;
+            object-fit: cover; /* Ensure the image fills the container properly */
+        }
+
+        /* Car Details */
+        .car-details {
+            padding-left: 0;
+            font-size: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pair {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .pair p {
+            color: #080404;
+        }
+
+        .book-btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+            background-color: #550909;
+            color: white;
+            font-size: 1.1rem;
+            display: inline-block;
+            width: 90%;
+            transition: background-color 0.3s ease;
+        }
+
+        .book-btn:hover {
+            background-color: #550b0b;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .car-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .car-item {
+                width: 90%;
+            }
+
+            .car-image-container {
+                height: 250px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .car-item {
+                width: 100%;
+            }
+
+            .car-image-container {
+                height: 230px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header with Home and Buy Cars -->
+    <header>
+        <a href="/home/" class="home-link">Home</a> <!-- Home Link -->
+        <h1>Book Cars For Rent</h1>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section id="car-rent" class="section">
+            <div class="container">
+                
+                <!-- Search Bar Section -->
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search cars by brand or model " onkeyup="searchCars()">
+                </div>
+
+                <!-- Filter Buttons Section -->
+                <div class="filter-buttons">
+                    <button onclick="filterCars('available')">Currently Available</button>
+                    <button onclick="filterCars('unavailable')">Currently Unavailable</button>
+                    <button onclick="filterCars('all')">Show All</button>
+                </div>
+
+                <!-- Car List Container -->
+                <div class="car-container" id="carList">
+                    {% for car in car %}
+                    <div class="car-item" data-availability="{{ car.availability }}" data-brand="{{ car.brand }}" data-model="{{ car.model }}">
+
+                        <!-- Availability Status -->
+                        {% if car.availability == 'Available' %}
+                            <div class="sold-out">Currently Available</div>
+                        {% else %}
+                            <div class="sold-out">Currently Unavailable</div>
+                        {% endif %}
+
+                        <!-- Car Image -->
+                        <div class="car-image-container">
+                            {% if car.image %}
+                                <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}" class="car-image">
+                            {% else %}
+                                <img src="{% static 'default-placeholder.jpg' %}" alt="No Image Available" class="car-image">
+                            {% endif %}
+                        </div>
+
+                        <!-- Car Details -->
+                        <div class="car-details">
+                            <h3><center>{{ car.brand }}</center></h3>
+                            <div class="pair">
+                                <p><strong>Owner:</strong> {{ car.usr.username }}</p>
+                                <p><strong>Email:</strong> {{ car.usr.email }}</p>
+                            </div>
+                            <div class="pair">
+                                <p><strong>Model:</strong> {{ car.model }}</p>
+                                <p><strong>Brand:</strong> {{ car.brand }}</p>
+                            </div>
+
+                            <div class="pair">
+                                <p><strong>Rent Amount per day:</strong> {{ car.rentamount }}</p>
+                                <p><strong>Year:</strong> {{ car.year }}</p>
+                            </div>
+
+                            <div class="pair">
+                                <p><strong>Fuel:</strong> {{ car.fuel }}</p>
+                                <p><strong>Kilometers:</strong> {{ car.km }} km</p>
+                            </div>
+
+                            <div class="pair">
+                               <p><strong>Description:</strong> {{ car.description }} km</p>
+                            </div>
+
+                        </div>
+
+                        <!-- Car Actions (Book Now Button) -->
+                        {% if car.availability == 'Available' %}
+                            <div class="actions">
+                                <a href="{% url 'booknowcarrent' car.id %}" class="book-btn">Book Now</a>
+                            </div>
+                        {% else %}
+                            <p>Currently Not Available for rent</p>
+                        {% endif %}
+                    </div>
+                    {% empty %}
+                    <p style="text-align:center; font-size: 1.2rem; color: #666; width: 100%;">No cars available to display.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Function to filter cars based on availability status
+        function filterCars(status) {
+            var cars = document.querySelectorAll('.car-item');
+            cars.forEach(function(car) {
+                if (status === 'available') {
+                    if (car.getAttribute('data-availability') === 'Available') {
+                        car.style.display = "block";
+                    } else {
+                        car.style.display = "none";
+                    }
+                } else if (status === 'unavailable') {
+                    if (car.getAttribute('data-availability') !== 'Available') {
+                        car.style.display = "block";
+                    } else {
+                        car.style.display = "none";
+                    }
+                } else {
+                    car.style.display = "block";
+                }
+            });
+        }
+
+        // Function to search cars based on brand or model
+        function searchCars() {
+            var input = document.getElementById('searchInput').value.toLowerCase();
+            var cars = document.querySelectorAll('.car-item');
+
+            if (input.length < 2) {
+                // If the search term is less than 2 characters, show all cars
+                cars.forEach(function(car) {
+                    car.style.display = "block";
+                });
+                return;
+            }
+
+            cars.forEach(function(car) {
+                var brand = car.getAttribute('data-brand').toLowerCase();
+                var model = car.getAttribute('data-model').toLowerCase();
+
+                if (brand.includes(input) || model.includes(input)) {
+                    car.style.display = "block"; // Show matching car
+                } else {
+                    car.style.display = "none"; // Hide non-matching car
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

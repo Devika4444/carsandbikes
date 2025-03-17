@@ -1,0 +1,215 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Sparepost</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and Page Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('{% static "image/sparereg7.jpg" %}');
+            background-size: 1425px 990px;
+            background-color: #f4f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 10px;
+            margin: 0;
+            flex-direction: column;
+        }
+       /* Header Styling */
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: center; /* Center all items */
+            align-items: center;
+            background-color: #740c0c;
+            padding: 15px 40px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .header h1 {
+            margin: 0;
+            text-align: center;
+            flex: 1; /* Allow the title to take available space */
+        }
+        .header .left-link,
+        .header .right-link {
+            font-size: 16px;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #ffffff;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        /* Add the ALL POSTS text to the center */
+        .header .all-posts {
+            font-size: 18px;
+            color: #ffffff;
+            text-align: center;
+            flex-grow: 1;
+            margin-left: 10px; /* Adds spacing between the header text and the "ALL POSTS" text */
+        }
+
+        /* Form Container Styling */
+        .form-container {
+            width: 100%;
+            max-width: 600px;
+            background-color:rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 80px; /* Ensuring space below the fixed header */
+        }
+
+        /* Form Group Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #000000;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #fafafa;
+            font-size: 16px;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #720909;
+            outline: none;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            height: 150px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #610707;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #770909;
+        }
+
+        .image-preview {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .image-preview img {
+            max-width: 150px;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 5px;
+            }
+
+            .form-container {
+                width: 100%;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div class="header">
+        <a href="/sparepostslist/" class="left-link">BACK</a>
+        <h1>EDIT SPAREPOSTS</h1>
+        <!-- <div class="all-posts">ALL POSTS</div> New centered "ALL POSTS" text -->
+        <div class="right-link"></div> <!-- Empty space for consistency -->
+    </div>
+
+    <!-- Form Container -->
+    <div class="form-container">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="image">Product Image</label>
+                <input type="file" id="image" name="image" class="form-control" accept="image/*">
+                
+                {% if spareposts.image %}
+                    <div class="image-preview">
+                        <p>Current Image:</p>
+                        <img src="{{ spareposts.image.url }}" alt="Current Image">
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="productname">Product Name</label>
+                <input type="text" id="productname" name="productname" class="form-control" value="{{ spareposts.productname }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" id="price" name="price" class="form-control" value="{{ spareposts.price }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" class="form-control" value="{{ spareposts.location }}">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" class="form-control" required>{{ spareposts.description }}</textarea>
+            </div>
+
+            <button type="submit" class="btn">Save Changes</button>
+        </form>
+    </div>
+</body>
+</html>

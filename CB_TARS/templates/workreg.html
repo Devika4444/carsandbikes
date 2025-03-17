@@ -1,0 +1,316 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop Form</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            outline: none;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            min-height: 100vh;
+            padding: 30px;
+            background-image: url('{% static "\image\workreg2.jpg" %}');
+            background-size: 1355px 590px;
+        }
+        .container {
+            max-width: 685px;
+            background: #fff;
+            width: 800px;
+            opacity: 0.9;
+            padding: 25px 40px 10px 30px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        .container .text {
+            text-align: center;
+            font-size: 41px;
+            font-weight: 600;
+            background: -webkit-linear-gradient(right, #050000, #6d5f5f, #6d5f5f, #050000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .container form {
+            padding: 30px 0 0 0;
+        }
+        .container form .form-row {
+            display: flex;
+            margin: 32px 0;
+        }
+        form .form-row .input-data {
+            width: 100%;
+            margin: 0 20px;
+            position: relative;
+        }
+        form .form-row .textarea {
+            height: 70px;
+        }
+        .input-data input,
+        .textarea textarea {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: none;
+            font-size: 17px;
+            border-bottom: 2px solid rgba(0,0,0, 0.12);
+        }
+        .input-data input:focus ~ label,
+        .textarea textarea:focus ~ label,
+        .input-data input:valid ~ label,
+        .textarea textarea:valid ~ label {
+            transform: translateY(-20px);
+            font-size: 14px;
+            color: #050000;
+        }
+        .textarea textarea {
+            resize: none;
+            padding-top: 15px;
+        }
+        .input-data label {
+            position: absolute;
+            pointer-events: none;
+            bottom: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .textarea label {
+            width: 100%;
+            bottom: 40px;
+            background: #fff;
+        }
+        .input-data .underline {
+            position: absolute;
+            bottom: 0;
+            height: 2px;
+            width: 100%;
+        }
+        .input-data .underline:before {
+            position: absolute;
+            content: "";
+            height: 2px;
+            width: 100%;
+            background: #050000;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+        .input-data input:focus ~ .underline:before,
+        .input-data input:valid ~ .underline:before,
+        .textarea textarea:focus ~ .underline:before,
+        .textarea textarea:valid ~ .underline:before {
+            transform: scale(1);
+        }
+        .submit-btn .input-data {
+            overflow: hidden;
+            height: 45px!important;
+            width: 25%!important;
+        }
+        .submit-btn .input-data .inner {
+            height: 100%;
+            width: 300%;
+            position: absolute;
+            left: -100%;
+            background: -webkit-linear-gradient(left, #050000,#050000, #6d5f5f, #050000);
+            transition: all 0.4s;
+        }
+        .submit-btn .input-data:hover .inner {
+            left: 0;
+        }
+        .submit-btn .input-data input {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 17px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+        }
+        @media (max-width: 700px) {
+            .container .text {
+                font-size: 30px;
+            }
+            .container form {
+                padding: 10px 0 0 0;
+            }
+            .container form .form-row {
+                display: block;
+            }
+            form .form-row .input-data {
+                margin: 35px 0!important;
+            }
+            .submit-btn .input-data {
+                width: 40%!important;
+            }
+        }
+        .password-container {
+            position: relative;
+        }
+        .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        /* Styles for Index and Login Buttons */
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button-container button {
+            background-color: #040000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .button-container button:hover {
+            background-color: #746666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text">WORKSHOP REGISTRATION</div>
+        <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">            
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="input-data">
+                    <input type="text" id="workname" name="workname" required>
+                    <div class="underline"></div>
+                    <label for="">Workshop Name</label>
+                </div>
+                <div class="input-data">
+                    <input type="email" id="email" name="email" required>
+                    <div class="underline"></div>
+                    <label for="">Email Address</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-data">
+                    <input type="tel" id="phonenumber" name="phonenumber" required>
+                    <div class="underline"></div>
+                    <label for="">Phone Number</label>
+                </div>
+                <div class="input-data">
+                    <div class="password-container">
+                        <input type="password" id="password" name="password" 
+                               required minlength="8"
+                               pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$"
+                               title="Password must be at least 8 characters long and contain at least one letter and one number.">
+                               <span class="eye-icon" onclick="togglePassword()">🔒</span>
+                               <label for="password">Password</label>
+                               <div class="underline"></div>
+                        </div> 
+                </div>
+            </div>
+            <div class="form-row">           
+                <div class="input-data">
+                    <input type="text" id="workaddress" name="workaddress" required>
+                    <div class="underline"></div>
+                    <label for="">Workshop Address</label>
+                </div>
+                <div class="input-data">
+                    <input type="text" id="showregno" name="showregno" 
+                           required 
+                           pattern="^[A-Z]{3,5}\d{4,6}(-\d{1,4})?$" 
+                           title="Company Registration Number (CRN) should start with 3-5 uppercase letters, followed by 4-6 digits, and optionally end with a dash and 1-4 digits.">
+                    <label for="showregno">Company Identification Number </label>
+                </div>
+            </div>
+            <div>
+                <label for="image">Workshop Image</label><br>
+                <input type="file" id="image" name="image" accept="image/*" required>
+            </div>
+            <div class="form-row submit-btn">
+                <div class="input-data">
+                    <div class="inner"></div>
+                    <input type="submit" value="Submit">
+                </div>
+            </div>
+        </form>
+
+        <!-- Index and Login Buttons -->
+        <div class="button-container">
+            <button onclick="window.location.href='/index/'">Index</button>
+            <button onclick="window.location.href='/worklogin/'">Login</button>
+        </div>
+    </div>
+
+    <script>
+        function validateForm() {
+            // Workshop name validation (only letters and spaces)
+            const workname = document.getElementById('workname');
+            const namePattern = /^[a-zA-Z\s]+$/;
+            if (!namePattern.test(workname.value)) {
+                alert('Workshop Name can only contain letters and spaces.');
+                workname.focus();
+                return false;
+            }
+
+            // Phone number validation (must be a number and at least 10 digits)
+            const phone = document.getElementById('phonenumber');
+            const phonePattern = /^[0-9]{10,}$/;
+            if (!phonePattern.test(phone.value)) {
+                alert('Phone number must be at least 10 digits.');
+                phone.focus();
+                return false;
+            }
+
+            // Password validation (already done through HTML5 pattern)
+            const password = document.getElementById('password');
+            if (password.value.length < 8) {
+                alert('Password must be at least 8 characters.');
+                password.focus();
+                return false;
+            }
+
+            // Image validation (check file extension and size)
+            const image = document.getElementById('image');
+            const file = image.files[0];
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            if (file && !allowedTypes.includes(file.type)) {
+                alert('Please upload a valid image file (JPG, PNG, or GIF).');
+                image.focus();
+                return false;
+            }
+            if (file && file.size > 5000000) { // max size 5MB
+                alert('The image file size must not exceed 5MB.');
+                image.focus();
+                return false;
+            }
+
+            return true;
+        }
+        
+        function togglePassword() {
+            const passwordField = document.getElementById("password");
+            const icon = document.querySelector(".eye-icon");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                icon.textContent = "👁️"; // You can change this to another icon (e.g., an open eye).
+            } else {
+                passwordField.type = "password";
+                icon.textContent = "🔒"; // Change back to eye icon when hiding the password.
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <style>
+        body {
+            background-image: url('{% static "\image\propic4.jpg" %}');       
+            font-family: Arial, sans-serif;
+            background-color: rgb(253, 253, 253);
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        /* Sidebar Styles */
+        .sidebar {
+            width: 200px;
+            background-color: #1a0103; /* Dark red background for sidebar */
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar a {
+            width: 80%;
+            padding: 12px;
+            background-color: #8a040b;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            margin-bottom: 10px;  /* Added small gap between buttons */
+            font-size: 1.1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .sidebar a:hover {
+            background-color: #442121; /* Darker red on hover */
+            transform: translateY(-2px);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 220px; /* Offset the content to the right */
+            width: calc(100% - 220px); /* Ensure content fills remaining space */
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 930px;
+            margin: 5px auto;
+            padding: 18px;     
+            background-color: #000000;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+        }
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 8px;
+        }
+        .form-group {
+            flex: 1;
+            padding: 13px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            background: linear-gradient(90deg, #a03b3b, #660e16, #a1232d, #680b0b);
+            color: rgb(255, 255, 255);
+            margin-right: 10px;
+        }
+        .form-group:last-child {
+            margin-right: 0px; 
+            padding-right: 15px;
+            width: 890px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            height: 30px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-group input[type="file"] {
+            padding: 10px;
+            width: 400px;
+        }
+        .form-group input[type="submit"] {
+            background-color: #ffffff;
+            color: #131111;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            width: 700px;
+        }
+        .form-group input[type="submit"]:hover {
+            background-color: #413b3b;
+        }
+        .profile-image {
+            display: block;
+            margin: 0 auto 10px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .image-upload {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar with Home and Profile -->
+    <div class="sidebar">
+        <a href="/home/">Home</a>
+        <a href="/userprofile/">Profile</a>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="container">
+            <form method="post" action="/proupdateu/" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group image-upload">
+                    <h1>UPDATE PROFILE</h1>
+                    <img src="{{image.url}}" alt="User Image" class="profile-image" height="150px" width="150px">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="image">Profile Picture</label>
+                            <input type="file" id="image" name="image" accept="image/*">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" value="{{username}}" required>
+                        </div>
+                    </div>    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" value="{{email}}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bio">Bio</label>
+                            <input type="text" id="bio" name="bio" value="{{bio}}" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phonenumber">Phone Number</label>
+                            <input type="number" id="phonenumber" name="phonenumber" value="{{phonenumber}}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" value="{{password}}" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="place">Place</label>
+                            <input type="text" id="place" name="place" value="{{place}}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pincode">Pincode</label>
+                            <input type="number" id="pincode" name="pincode" value="{{pincode}}" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="submit" value="Submit">
+                        </div>    
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

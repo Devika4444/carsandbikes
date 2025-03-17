@@ -1,0 +1,179 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration & Login - Auto Flex</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('{% static "image/MuchaTseBle.jpg" %}'); 
+            background-size: 1375px 590px;
+            background-color: #f4f4f4;
+        }
+
+        .header-container {
+            background-color: #130f0f;
+            color: rgb(255, 255, 255);
+            opacity: 0.8;
+            font-weight: bold;
+            padding: 20px 0;
+            font: 1.3em sans-serif;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-container h1 {
+            font-size: 2.5em;
+        }
+
+        .header-container img {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            max-width: 150px;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .row {
+            margin-top: 5px;
+        }
+
+        .form-container {
+            background-color: rgba(172, 30, 30, 0.5); /* Reduced opacity */
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px; /* Increased width of the form box */
+            height: auto; /* Adjust height automatically */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container img {
+            width: 80%; /* Reduce the width of the image */
+            height: auto; /* Adjust height proportionally */
+            object-fit: cover; /* Ensures the image covers the container without distortion */
+            border-radius: 10px;
+        }
+
+        .form-group input {
+            width: 70%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .link-button {
+            display: block;
+            padding: 12px;
+            margin-bottom: 15px;
+            background-color: #640a0a;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            width: 70%; /* Increase the width */
+            margin-left: auto; /* Center the buttons horizontally */
+            margin-right: auto; /* Center the buttons horizontally */
+        }
+
+        .link-button:hover {
+            background-color: #882121;
+        }
+
+        .form-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        /* Add margin-bottom to the registration section */
+        .form-section.registration {
+            margin-bottom: 40px; /* Adjust the gap between sections */
+        }
+
+        .form-section .form-container {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .form-section .image-container {
+            flex: 0.5;
+        }
+
+        .image-container img {
+            width: 100%; /* Set image width to 100% of its container */
+            height: auto; /* Maintain aspect ratio */
+            object-fit: cover; /* Ensure the image covers the container without distortion */
+        }
+
+        h2 {
+            font: 2.5em sans-serif;
+            color: #f4f4f4;
+            font-weight: bold; /* Make the header bold */
+            text-align: center;
+            padding-bottom: 10px; /* Center the header */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div class="header-container">
+        <h1>AUTO FLEX</h1>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row form-section registration">
+            <!-- Registration Form -->
+            <div class="form-container">
+                <h2>REGISTER</h2>
+                <a href="/register/" class="link-button">USER REGISTRATION</a>
+                <a href="/workreg/" class="link-button">WORKSHOPS  REGISTRATION</a>
+                <a href="/showreg/" class="link-button">SHOWROOMS REGISTRATION</a>
+                <a href="/sparereg/" class="link-button">SPAREPARTS  REGISTRATION</a>
+            </div>
+
+            <!-- Registration Image -->
+            <div class="image-container">
+                <!-- <img src="{% static 'image/index17.jpg' %}" alt="Registration Image"> -->
+            </div>
+        </div>
+
+        <!-- Login Form Section -->
+        <div class="row form-section">
+            <!-- Login Form -->
+            <div class="form-container">
+                <h2>LOGIN</h2>
+                <a href="/login/" class="link-button">USER LOGIN</a>
+                <a href="/worklogin/" class="link-button">WORKSHOPS LOGIN</a>
+                <a href="/showlogin/" class="link-button">SHOWROOMS LOGIN</a>
+                <a href="/sparelogin/" class="link-button">SPAREPARTS LOGIN</a>
+                <a href="/adminlogin/" class="link-button">ADMIN LOGIN</a>
+            </div>
+
+            <!-- Login Image -->
+            <div class="image-container">
+                <!-- <img src="{% static 'image/index24.jpg' %}" alt="Login Image"> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

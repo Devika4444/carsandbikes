@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spare Posts List</title>
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #000000;
+            line-height: 1.6;
+            padding: 30px;
+            position: relative; /* Added for absolute positioning of the home button */
+        }
+
+        /* Header Styling */
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #490606;
+        }
+
+        /* Container for the list of spare posts */
+        .spareposts-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .sparepost-item {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .sparepost-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .sparepost-item img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .sparepost-item h3 {
+            font-size: 1.5rem;
+            color: #000000;
+        }
+
+        .sparepost-item p {
+            color: #000000;
+            margin: 5px 0;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            color: #530808;
+        }
+
+        .description {
+            font-size: 1rem;
+            color: #000000;
+        }
+
+        .location {
+            font-size: 1rem;
+            color: #ff0000;
+        }
+
+        /* Home Link (Top Left) */
+        .home-link {
+            position: absolute; /* Position the button relative to the body */
+            top: 20px;
+            left: 20px;
+        }
+
+        .home-link a {
+            text-decoration: none;
+            background-color: #520707;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+        }
+
+        .home-link a:hover {
+            background-color: #660808;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Home Link at the top-left corner -->
+    <div class="home-link">
+        <a href="/user_sparelist/">Back</a>
+        <a href="/home/">Home</a>
+    </div>
+
+    <h1>SPARE POSTS</h1>
+
+    <!-- Spare Posts List -->
+    <div class="spareposts-container">
+        {% for post in spareposts %}
+            <div class="sparepost-item">
+                <!-- Image -->
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="{{ post.productname }}">
+                {% else %}
+                    <img src="/static/images/default-placeholder.jpg" alt="No Image Available">
+                {% endif %}
+                
+                <!-- Product Name -->
+                <h3>{{ post.productname }}</h3>
+
+                <!-- Price -->
+                <p class="price">Price: {{ post.price }}</p>
+
+                <!-- Location -->
+                <p class="location"><strong>Location:</strong> {{ post.location }}</p>
+
+                <!-- Description -->
+                <p class="description">{{ post.description }}</p>
+            </div>
+        {% empty %}
+            <p>No spare posts available.</p>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

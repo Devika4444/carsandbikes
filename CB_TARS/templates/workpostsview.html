@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post View</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #270303;
+            color: #0e0505;
+            line-height: 1.6;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        /* Header Styling */
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Search Bar Styling */
+        .search-container {
+            margin-bottom: 20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .search-container input {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        /* Home Link Section */
+        .home-link-container {
+            text-align: right;
+            margin-bottom: 15px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .home-link-container a {
+            background-color: #8a040b;
+            color: white;
+            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .home-link-container a:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        /* Car List Container Styling */
+        .car-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .car-item {
+            background-color: #fff;
+            width: 600px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            display: flex;
+            flex-direction: row;
+            margin: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .car-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Image Styling with Frame */
+        .car-image-container {
+            width: 200px; /* Fixed width for the image container */
+            height: 260px; /* Fixed height */
+            margin-right: 20px; /* Space between image and details */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Ensures no overflow if the image is too large */
+            border: 3px solid #8a040b; /* Red border around the image container */
+            border-radius: 10px; /* Rounded corners for the frame */
+        }
+
+        .car-image {
+            width: 100%; /* Image fills the container */
+            height: auto;
+            object-fit: contain; /* Ensure the image fits the container without distortion */
+        }
+
+        /* Car Details Layout with Frame */
+        .car-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%; /* Take full remaining space */
+            border: 3px solid #8a040b; /* Red border around the details section */
+            border-radius: 10px;
+            padding: 15px; /* Padding inside the details box */
+            background-color: #f4f4f4; /* Light background for the details */
+        }
+
+        .pair {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0px;
+            width: 100%;
+        }
+
+        .pair p {
+            font-size: 1rem;
+            color: #080404;
+            width: 70%; /* Keep fields aligned on the same line */
+        }
+
+        /* Actions and Book Now Button Styling */
+        .actions {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 250px;
+            gap: 5px;
+        }
+
+        .book-btn {
+            padding: 8px 25px;
+            border-radius: 4px;
+            margin-bottom: 20%;
+            text-align: center;
+            width: 120px;
+            height: 38px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            background-color: #28a745;
+            color: white;
+        }
+
+        .book-btn:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .car-item {
+                width: 90%;
+                flex-direction: column; /* Stack image and details vertically */
+            }
+
+            .car-image-container {
+                width: 100%;
+                height: 200px;
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
+            .car-details {
+                padding: 0 20px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .car-item {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .car-image-container {
+                width: 100%;
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Posts</h1>
+
+    <!-- Search Bar Section -->
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search cars by productname or location" onkeyup="searchCars()">
+    </div>
+
+    <!-- Home Link Section -->
+    <div class="home-link-container">
+        <a href="/workhome/">Home</a>
+    </div>
+
+    <!-- Car List Container -->
+    <div class="car-container" id="carList">
+        {% for workposts in workposts %}
+        <div class="car-item" data-brand="{{ workposts.productname }}" data-location="{{ workposts.location }}">
+            <!-- Car Image -->
+            <div class="car-image-container">
+                {% if workposts.image %}
+                    <img src="{{ workposts.image.url }}" alt="{{ workposts.productname }}" class="car-image">
+                {% else %}
+                    <img src="#" alt="No Image Available" class="car-image">
+                {% endif %}
+            </div>
+
+            <!-- Car Details -->
+            <div class="car-details" id="car-details-{{ forloop.counter }}">
+                <h3><center>{{ workposts.productname }}</center></h3>
+                <div class="pair">
+                    <p><strong>Owner:</strong> {{ workposts.work.workname }}</p>
+                </div>
+                <div class="pair">
+                    <p><strong>Name:</strong> {{ workposts.productname }}</p>
+                </div>
+                <div class="pair">
+                    <p><strong>Price:</strong> {{ workposts.price }}</p>
+                </div>
+                <div class="pair">
+                    <p><strong>Location:</strong> {{ workposts.location }}</p>
+                </div>
+                <div class="pair">
+                    <p><strong>Description:</strong> {{ workposts.description }}</p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p style="text-align:center; font-size: 1.2rem; color: #666; width: 100%;">No posts available to display.</p>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

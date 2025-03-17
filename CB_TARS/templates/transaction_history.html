@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History</title>
+    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.0-alpha.2/dist/tailwind.min.js"></script>
+
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: #520505;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 3rem;
+        }
+
+        h3 {
+            font-size: 2rem;
+            color: #520707;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            font-size: 0.875rem;
+        }
+
+        th {
+            background-color: #5a0808;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #F9FAFB;
+        }
+
+        tr:hover {
+            background-color: #F3F4F6;
+        }
+
+        td {
+            color: #000000;
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+            color: #640808;
+        }
+
+        .transaction-date {
+            color: #000000;
+        }
+
+        .no-transactions {
+            color: #6B7280;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* Responsive Table */
+        @media screen and (max-width: 768px) {
+            th, td {
+                padding: 0.75rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            h3 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 250px;
+            background-color: #520b0b;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            gap: 1rem;
+        }
+
+        .sidebar a {
+            padding: 1rem;
+            text-decoration: none;
+            color: white;
+            background-color: #990f0f;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: #880e0e;
+        }
+
+        .main-content {
+            margin-left: 270px; /* Space for sidebar */
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a href="/home/">Home</a>
+        <a href="/userprofile/">Profile</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container mx-auto p-8">
+            <!-- Heading Section -->
+            <h2>TRANSACTION HISTORY</h2>
+
+            {% for category, records in transactions.items %}
+                <div class="mb-12 bg-white shadow-lg rounded-lg p-8">
+                    <!-- Category Title -->
+                    <h3>{{ category|title }}</h3>
+
+                    {% if records %}
+                        <!-- Transaction Table -->
+                        <div class="overflow-x-auto rounded-lg">
+                            <table class="min-w-full table-auto bg-white rounded-lg shadow-md">
+                                <!-- Table Header -->
+                                <thead class="bg-blue-600 text-white rounded-t-lg">
+                                    <tr>
+                                        <th>Transaction ID</th>
+                                        <th>Item</th>
+                                        <th>Owner</th>
+                                        <th>Owner Email</th>
+                                        <th>Type</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-700">
+                                    {% for record in records %}
+                                        <tr class="border-b hover:bg-gray-50 transition-colors">
+                                            <td>{{ record.order_id }}</td>
+                                            <td>
+                                                {% if record.car %}
+                                                    {{ record.car.brand }} {{ record.car.model }}
+                                                {% elif record.bike %}
+                                                    {{ record.bike.brand }} {{ record.bike.model }}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if record.car %}
+                                                    {{ record.car.usr.username }}
+                                                {% elif record.bike %}
+                                                    {{ record.bike.usr.username }}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if record.car %}
+                                                    {{ record.car.usr.email }}
+                                                {% elif record.bike %}
+                                                    {{ record.bike.usr.email }}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if category == 'car_sales' or category == 'bike_sales' %}
+                                                    Selling
+                                                {% else %}
+                                                    Renting
+                                                {% endif %}
+                                            </td>
+                                            <td class="transaction-amount">{{ record.amount|floatformat:2 }}</td>
+                                            <td class="transaction-date">{{ record.created_at|date:"F d, Y" }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="no-transactions">No transactions found for this category.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>

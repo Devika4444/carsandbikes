@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spareparts Home</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<style>
+		/* Custom styles */
+		body {
+			background-image: url('{% static "image/sparereg7.jpg" %}');
+			background-size: 675px 630px;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			font-family: Arial, sans-serif;
+		}
+	
+		.navbar {
+			margin-bottom: 0;
+			background-color: #000;  /* Set navbar background to black */
+		}
+	
+		.navbar .nav > li > a {
+			color: #ffffff;
+			background-color: #000;  /* Set navbar links to black background */
+		}
+	
+		.navbar .nav > li > a:hover {
+			color: #ffffff;
+			background-color: #333;  /* Darken background when hovering */
+		}
+	
+		.container {
+			margin-top: 50px;
+		}
+	
+		.box {
+			margin: 20px;
+			padding: 20px;
+			text-align: center;
+			border: 2px solid #ddd;
+			border-radius: 8px;
+			background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+		}
+	
+		.box a {
+			text-decoration: none;
+			font-size: 18px;
+			color: white;
+			padding: 15px 40px;
+			background-color: #490404;
+			border-radius: 5px;
+		}
+	
+		.box a:hover {
+			background-color: #500505;
+		}
+	
+		/* Added gap between the "Add Services" link and the text inside the box */
+		.box p {
+			margin-top: 25px; /* Adds space between the link and the paragraph text */
+			color: #000;
+			font-size: 16px;
+		}
+	
+		/* Updated Heading Style for "WORKSHOP HOME" */
+		h1 {
+			text-align: center;
+			margin-top: 2px; /* Increased gap from top */
+			font-size: 60px; /* Increased font size */
+			font-weight: bold;
+			color: #fff;
+			background-color: rgba(68, 6, 6, 0.7); /* Reduced opacity on background */
+			padding: 40px 20px; /* Increased padding for a taller background */
+			border-radius: 8px;
+			text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+		}
+	
+		/* Navbar Style */
+		.navbar .nav > li > a {
+			color: #ffffff;
+			background-color: #440606;
+			justify-content: space-between;
+			margin-left: 10px;
+		}
+	
+		.navbar .nav > li > a:hover {
+			color: #ffffff;
+			background-color: #440606;
+		}
+	</style>
+	
+	
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="upmenu">
+                <ul class="nav navbar-nav" id="navbarontop">
+                    <li><a href="/spareprofile/">PROFILE</a></li>
+                    <li><a href="/sparepostsview/">ALL POSTS</a></li>
+                    <li><a href="/sparefeedback_rate/">FEEDBACK</a></li>
+                    <li><a href="/splogout/" style="color: #ffffff;">LOGOUT</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section (Updated Style) -->
+    <h1>SPAREPARTS HOME</h1>
+
+    <!-- Container for "Add Services" and "Your Services" -->
+    <div class="container">
+        <div class="row">
+            <!-- Add Services Box -->
+			<div class="col-sm-6">
+                <div class="box">
+                    <a href="/spareposts/">Add Posts</a>
+                    <p style="color: #000; font-size: 16px;">Add new posts you offer to customers.</p>
+                </div>
+            </div>
+			<div class="col-sm-6">
+                <div class="box">
+                    <a href="/sparepostslist/">Your Posts</a>
+                    <p style="color: #000; font-size: 16px;">View and manage the posts you’ve listed for your customers.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

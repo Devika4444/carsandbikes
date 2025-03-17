@@ -1,0 +1,272 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings</title>
+    <link rel="stylesheet" href="your-stylesheet.css">
+    <style>
+        /* Global Styles */
+        body {
+            background-image: url('{% static "image/MuchaTseBle.jpg" %}');
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #000000;
+            margin: 0;
+            padding: 0;
+        }
+
+     
+        /* Header Section */
+        .bookings-container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 5px;
+        }
+
+        .bookings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #130f0f;
+            color: rgb(255, 255, 255);
+            padding: 40px 10px;
+            width: 100%;
+            opacity: 0.9;
+        }
+
+        .bookings-header h1 {
+            font-size: 2.5em;
+            color: #fff;
+            margin: 0;
+        }
+
+        .home-button {
+            background: linear-gradient(90deg, #640f0f, #b83a44, #a03941, #690e0e);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 12px;
+            box-shadow: 0px 4px 6px rgba(22, 24, 126, 0.1);
+            cursor: pointer;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .home-button:hover {
+            background: linear-gradient(90deg, #b83a44, #a03941, #690e0e, #640f0f);
+            box-shadow: 0px 6px 10px rgba(22, 24, 126, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 36px;
+            font-weight: 700;
+            color: #000000;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            font-size: 16px;
+            border: 1px solid #e0e0e0;
+            transition: background-color 0.3s;
+        }
+
+        th {
+            background-color: #7e1010;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        td {
+            background-color: #fafafa;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
+
+        /* Pay Now Button Styling */
+        .pay-button {
+            background: linear-gradient(90deg, #640f0f, #b83a44, #a03941, #690e0e);
+            border: none;
+            color: rgb(254, 254, 255);
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 12px;
+            box-shadow: 0px 4px 6px rgba(22, 24, 126, 0.1);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .pay-button:hover {
+            background: linear-gradient(90deg, #b83a44, #a03941, #690e0e, #640f0f);
+            box-shadow: 0px 6px 10px rgba(22, 24, 126, 0.2);
+        }
+
+        /* No bookings message */
+        .no-bookings-message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #888;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .bookings-container {
+                width: 95%;
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 28px;
+            }
+
+            th, td {
+                font-size: 14px;
+                padding: 12px;
+            }
+
+            .bookings-header h1 {
+                font-size: 1.8em;
+            }
+
+            .pay-button {
+                font-size: 14px;
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+ 
+    <div class="bookings-container">
+        <header class="bookings-header">
+            <!-- Home Button on the left -->
+            <a href="/home/" class="home-button">Home</a>
+            <h1>BOOKED BIKES </h1>
+        </header>
+
+        <div class="bookings-table-container">
+            {% if bookings %}
+                <h2>Your Booked Bikes</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bike Brand</th>
+                            <th>Bike Model</th>
+                            <th>Price</th>
+                            <th>Location</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in bookings %}
+                            <tr class="booking-item">
+                                <input type="hidden" name="cid" class="cid" value="{{ booking.bike.id }}">
+                                <input type="hidden" name="amount" class="amount" value="{{ booking.bike.price }}">
+                                <td>{{ booking.bike.brand }}</td>
+                                <td>{{ booking.bike.model }}</td>
+                                <td>{{ booking.bike.price }}</td>
+                                <td>{{ booking.bike.location }}</td>
+                                <td>{{ booking.date }}</td>
+                                {% if booking.approval_status == 'approved' %}
+                                    <td><button type="button" class="pay-button">Pay Now</button></td>
+                                {% else %}
+                                    <td>{{ booking.approval_status }}</td>
+                               {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="no-bookings-message">
+                    <p>You have no bookings yet.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        document.querySelectorAll('.pay-button').forEach(button => {
+            button.addEventListener('click', function (e) {
+                const parent = e.target.closest('.booking-item');
+                const cid = parent.querySelector('.cid').value;
+                const amount = parent.querySelector('.amount').value;
+    
+                if (!amount || amount <= 0) {
+                    alert('Please enter a valid amount');
+                    return;
+                }
+    
+                // Ensure Razorpay key is passed from the Django template
+                const razorpayKey = "{{ RAZOR_KEY_ID }}";  // Make sure the key is rendered here
+    
+                if (!razorpayKey) {
+                    alert('Razorpay key is missing!');
+                    return;
+                }
+    
+                // Initiate payment
+                fetch(`/initiate-payment_bikesell/${cid}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const orderId = data.order_id;
+                        const options = {
+                            "key": razorpayKey,  // Ensure the Razorpay key is passed correctly
+                            "amount": data.amount,
+                            "currency": "INR",
+                            "name": data.buyer?.name || 'Default Name',  // Fallback if buyer name is missing
+                            "description": "Add Money to Wallet",
+                            "order_id": orderId,
+                            "handler": function (response) {
+                                window.location.href = `/confirm-payment_bikesell/${orderId}/${response.razorpay_payment_id}/${cid}/`;
+                            },
+                            "prefill": {
+                                "name": data.buyer?.name || 'Default Name',
+                                "email": data.buyer?.email || 'default@example.com',
+                                "contact": data.buyer?.phone || '0000000000'  // Ensure phone number is passed correctly
+                            },
+                            "theme": {
+                                "color": "#3399cc"
+                            }
+                        };
+                        const rzp = new Razorpay(options);
+                        rzp.open();
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Failed to initiate payment. Please try again.');
+                    });
+            });
+        });
+    </script>
+
+</body>
+</html>

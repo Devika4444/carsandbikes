@@ -1,0 +1,276 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            outline: none;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 10px;
+            background-image: url('{% static "image/showreg.jpg" %}');
+            background-size: 1375px 590px;
+            background-position: center;
+        }
+        .container {
+            max-width: 800px;
+            background: #fff;
+            width: 800px;
+            opacity: 0.9;
+            padding: 25px 40px 10px 40px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        .container .text {
+            text-align: center;
+            font-size: 41px;
+            font-weight: 600;
+            background: -webkit-linear-gradient(right, #b41428, #b41428, #b41428, #b41428);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .container form {
+            padding: 30px 0 0 0;
+        }
+        .container form .form-row {
+            display: flex;
+            margin: 32px 0;
+        }
+        form .form-row .input-data {
+            width: 100%;
+            margin: 0 20px;
+            position: relative;
+        }
+        form .form-row .textarea {
+            height: 70px;
+        }
+        .input-data input,
+        .textarea textarea {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: none;
+            font-size: 17px;
+            border-bottom: 2px solid rgba(0,0,0, 0.12);
+        }
+        .input-data input:focus ~ label,
+        .textarea textarea:focus ~ label,
+        .input-data input:valid ~ label,
+        .textarea textarea:valid ~ label {
+            transform: translateY(-20px);
+            font-size: 16px;
+            color: #b41428;
+        }
+        .textarea textarea {
+            resize: none;
+            padding-top: 15px;
+        }
+        .input-data label {
+            position: absolute;
+            pointer-events: none;
+            bottom: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .textarea label {
+            width: 100%;
+            bottom: 40px;
+            background: #fff;
+        }
+        .input-data .underline {
+            position: absolute;
+            bottom: 0;
+            height: 2px;
+            width: 100%;
+        }
+        .input-data .underline:before {
+            position: absolute;
+            content: "";
+            height: 2px;
+            width: 100%;
+            background: #b41428;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+        .input-data input:focus ~ .underline:before,
+        .input-data input:valid ~ .underline:before,
+        .textarea textarea:focus ~ .underline:before,
+        .textarea textarea:valid ~ .underline:before {
+            transform: scale(1);
+        }
+        .submit-btn .input-data {
+            overflow: hidden;
+            height: 45px!important;
+            width: 25%!important;
+        }
+        .submit-btn .input-data .inner {
+            height: 100%;
+            width: 300%;
+            position: absolute;
+            left: -100%;
+            background: -webkit-linear-gradient(right, #b41428, #b41428, #b41428, #b41428);
+            transition: all 0.4s;
+        }
+        .submit-btn .input-data:hover .inner {
+            left: 0;
+        }
+        .submit-btn .input-data input {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 17px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+        }
+        @media (max-width: 700px) {
+            .container .text {
+                font-size: 30px;
+            }
+            .container form {
+                padding: 10px 0 0 0;
+            }
+            .container form .form-row {
+                display: block;
+            }
+            form .form-row .input-data {
+                margin: 35px 0!important;
+            }
+            .submit-btn .input-data {
+                width: 40%!important;
+            }
+        }
+        .password-container {
+        position: relative;
+        }
+        .eye-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        }
+        
+        /* Style for the buttons section */
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .buttons a {
+            background-color: #b41428;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            width: 48%;  /* Set equal width for both buttons */
+            text-align: center;
+        }
+        .buttons a:hover {
+            background-color: #a2131c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text">USER REGISTRATION</div>
+        <form method="post" action="#" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="input-data">
+                    <input type="text" id="username" name="username" required>
+                    <div class="underline"></div>
+                    <label for="username">User Name</label>
+                </div>
+                <div class="input-data">
+                    <input type="email" id="email" name="email" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+                    <div class="underline"></div>
+                    <label for="email">Email</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-data">
+                    <input type="tel" id="phonenumber" name="phonenumber" required pattern="^\d{10}$">
+                    <div class="underline"></div>
+                    <label for="phonenumber">Phone Number</label>
+                </div>
+                <div class="input-data">
+                    <div class="password-container">
+                    <input type="password" id="password" name="password" 
+                           required minlength="8"
+                           pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$"
+                           title="Password must be at least 8 characters long and contain at least one letter and one number.">
+                           <span class="eye-icon" onclick="togglePassword()">🔒</span>
+                           <label for="password">Password</label>
+                           <div class="underline"></div>
+                    </div>  
+                </div>
+                
+            </div>
+            <div class="form-row">
+                <div class="input-data">
+                    <input type="text" id="place" name="place" required>
+                    <div class="underline"></div>
+                    <label for="place">Place</label>
+                </div>
+                <div class="input-data">
+                    <input type="text" id="pincode" name="pincode" 
+                           required 
+                           pattern="^\d{6}$"
+                           title="Pincode must be exactly 6 digits.">
+                    <div class="underline"></div>
+                    <label for="pincode">Pincode</label>
+                </div>
+                
+            </div>
+            <div>
+                <label for="image">Profile Image</label><br>
+                <input type="file" id="image" name="image" accept="image/*" required>
+            </div>
+            <div class="form-row submit-btn">
+                <div class="input-data">
+                    <div class="inner"></div>
+                    <input type="submit" value="Submit">
+                </div>
+            </div>
+        </form>
+
+        <!-- Buttons Section -->
+        <div class="buttons">
+            <a href="/">Index</a>
+            <a href="/login/">Login</a>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordField = document.getElementById("password");
+            const icon = document.querySelector(".eye-icon");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                icon.textContent = "👁️"; // You can change this to another icon (e.g., an open eye).
+            } else {
+                passwordField.type = "password";
+                icon.textContent = "🔒"; // Change back to eye icon when hiding the password.
+            }
+        }
+    </script>
+</body>
+</html>

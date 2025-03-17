@@ -1,0 +1,168 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Showroom List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        .custom-link {
+            color: white; /* Change link text color to white */
+            background-color: rgb(100, 7, 7); /* Red background for HOME button */
+            text-decoration: none; /* Remove underline from link */
+            padding: 10px 20px; /* Add padding for better appearance */
+            border-radius: 5px; /* Optional: Rounded corners */
+            transition: background-color 0.3s ease; /* Smooth transition effect */
+        }
+
+        /* Hover effect for HOME button */
+        .custom-link:hover {
+            background-color: darkred; /* Darker red background on hover */
+            color: white; /* Ensure text stays white */
+        }
+
+        /* Header Container */
+        .header-container {
+            background-color: rgb(70, 5, 5); /* Dark background with transparency */
+            padding: 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Adjustments for title styling */
+        .header-container h1 {
+            font-size: 2.5em;
+            text-transform: uppercase;
+        }
+
+        /* Custom card styles */
+        .card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            color: #000000;
+        }
+
+        .card-text {
+            font-size: 1.1em;
+            color: #000000;
+        }
+
+        /* Custom buttons */
+        .btn-custom {
+            background-color: rgb(61, 3, 3);
+            color: white;
+            border: none;
+        }
+
+        .btn-custom:hover {
+            background-color: rgb(87, 8, 8);
+        }
+
+        /* Card image styles */
+        .card-img-top {
+            height: 300px;
+            object-fit: cover;
+        }
+
+        /* Search Form Styles */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container with title and homepage link -->
+    <div class="header-container">
+        <a href="/home/" class="custom-link btn btn-primary">HOME</a>
+        <h1>Showrooms</h1>
+        <div></div> <!-- Empty div to maintain layout alignment -->
+    </div>
+
+    <div class="container mt-5">
+        <!-- Search Filter Form -->
+        <div class="row mb-4">
+            <div class="col-md-8 mx-auto">
+                <div class="input-group">
+                    <!-- Search input for showroom name -->
+                    <input type="text" id="search-name" class="form-control" placeholder="Search by showroom name..." aria-label="Search by showroom name">
+                    <!-- Search input for showroom location -->
+                    <input type="text" id="search-address" class="form-control" placeholder="Search by location..." aria-label="Search by location">
+                </div>
+            </div>
+        </div>
+
+        <!-- Display Showrooms -->
+        <div class="row" id="showrooms-list">
+            {% for showroom in showrooms %}
+                <div class="col-md-4 mb-4 showroom-item">
+                    <div class="card">
+                        <!-- Display the showroom image -->
+                        <img src="{% if showroom.image %}{{ showroom.image.url }}{% else %}/static/path/to/default-image.jpg{% endif %}" 
+                             class="card-img-top" alt="{{ showroom.showname }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ showroom.showname }}</h5>
+                            <p class="card-text"><strong>Location:</strong> {{ showroom.showaddress }}</p>
+                            <p class="card-text"><strong>Email:</strong> {{ showroom.email }}</p>
+                            <p class="card-text"><strong>Phone Number:</strong> {{ showroom.phonenumber }}</p>
+                            <a href="/showpostslistu/{{ showroom.id }}/" class="btn btn-custom">Find Your Ride</a><br><br>
+                            <a href="/s_book_services/{{ showroom.id }}/" class="btn btn-custom">Book Services</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <center>
+                    <p>No showrooms available at the moment.</p>
+                </center>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Get references to the search input fields and the showroom items
+        const searchNameInput = document.getElementById('search-name');
+        const searchAddressInput = document.getElementById('search-address');
+        const showroomItems = document.querySelectorAll('.showroom-item');
+
+        // Function to filter the showrooms based on the search criteria
+        function filterShowrooms() {
+            const searchName = searchNameInput.value.toLowerCase();
+            const searchAddress = searchAddressInput.value.toLowerCase();
+
+            showroomItems.forEach((showroomItem) => {
+                const title = showroomItem.querySelector('.card-title').textContent.toLowerCase();
+                const address = showroomItem.querySelector('.card-text').textContent.toLowerCase();
+                
+                // Show or hide showroom based on whether both name and address match
+                if (title.includes(searchName) && address.includes(searchAddress)) {
+                    showroomItem.style.display = 'block';
+                } else {
+                    showroomItem.style.display = 'none';
+                }
+            });
+        }
+
+        // Add event listeners to search inputs
+        searchNameInput.addEventListener('input', filterShowrooms);
+        searchAddressInput.addEventListener('input', filterShowrooms);
+    </script>
+</body>
+</html>

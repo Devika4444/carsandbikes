@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services List</title>
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('{% static "image/index8.jpg" %}'); 
+            background-size: 1425px 990px;
+            background-color: #f4f4f9;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Header Container */
+        .header-container {
+            background-color: rgba(0, 0, 0, 0.6); /* Dark background with transparency */
+            padding: 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Home Button Styling */
+        .back-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Header Title Styling */
+        h1 {
+            font-size: 2.5em;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+        }
+
+        /* Services Container */
+        .services-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px; /* Space below the header */
+        }
+
+        /* Service Card Styling */
+        .service-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            width: 250px;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card h2 {
+            font-size: 1.5em;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            font-size: 1em;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        /* Action Buttons Styling */
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .actions a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .actions a:hover {
+            text-decoration: underline;
+        }
+
+        /* Add New Service Button */
+        .add-service-btn {
+            display: inline-block;
+            background-color: #101392;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            width: auto;
+        }
+
+        .add-service-btn:hover {
+            background-color: #383d80;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Container -->
+    <div class="header-container">
+        <a href="/workhome/" class="back-btn">Home</a>
+        <h1>Services List</h1>
+        <!-- Empty div to align title to center -->
+        <div></div>
+    </div>
+
+    <div class="services-container">
+        {% for service in services %}
+        <div class="service-card">
+            <h2><center>{{ service.services }}</h2></center>
+            <p><strong>Service ID:</strong> {{ service.service_id }}</p>
+            <p><strong>Price Range:</strong> {{ service.price_range }}</p>
+            <p><strong>Worker Name:</strong> {{ service.workername}}</p>
+            <p><strong>Phone no:</strong> {{ service.phoneno }}</p>
+            <div class="actions">
+                <a href='/edit_service/{{ service.service_id }}'>Edit</a>
+                <a href='/delete_service/{{ service.service_id }}'>Delete</a>
+                <a href='/listworkbookings/{{ service.id }}'>Bookings</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'addservices' %}" class="add-service-btn">Add New Service</a>
+
+</body>
+</html>

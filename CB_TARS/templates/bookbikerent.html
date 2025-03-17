@@ -1,0 +1,352 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Bike Rent</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background-color: #630909; /* Dark Red */
+            color: #fff;
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .home-link {
+            font-size: 1.2rem;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            background-color: #831f1f; /* Darker Red */
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .home-link:hover {
+            background-color: #4C0000; /* Even Darker Red */
+        }
+
+        /* Main Content */
+        main {
+            padding: 40px;
+        }
+
+        .section {
+            background-color: #fff;
+            margin-bottom: 20px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #640a0a;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Search and Filter Section */
+        .search-container {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .search-container input {
+            width: 80%;
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .filter-container button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 1rem;
+            background-color: #6A0000;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .filter-container button:hover {
+            background-color: #4C0000;
+        }
+
+        /* Bike List Section */
+        .car-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .car-item {
+            background-color: #fff;
+            width: 350px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            margin: 10px;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .car-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .sold-out {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #880c0c;
+            color: white;
+            padding: 5px 15px;
+            font-weight: bold;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1rem;
+            z-index: 10;
+        }
+
+        .car-image-container {
+            width: 100%;
+            height: 250px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f7f7f7;
+        }
+
+        .car-image {
+            width: auto;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Bike Details */
+        .car-details {
+            padding-left: 0;
+            font-size: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pair {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .pair p {
+            color: #080404;
+        }
+
+        .book-btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+            background-color: #660606;
+            color: white;
+            font-size: 1.1rem;
+            display: inline-block;
+            width: 90%;
+            transition: background-color 0.3s ease;
+        }
+
+        .book-btn:hover {
+            background-color: #880d0d;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .car-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .car-item {
+                width: 90%;
+            }
+
+            .car-image-container {
+                height: 250px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .car-item {
+                width: 100%;
+            }
+
+            .car-image-container {
+                height: 230px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header with Home and Rent Bikes -->
+    <header>
+        <a href="/home/" class="home-link">Home</a> <!-- Home Link -->
+        <h1>Book Bikes For Rent</h1>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section id="bike-rent" class="section">
+            <div class="container">
+
+                <!-- Search Bar Section -->
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search bikes  brand or model " onkeyup="searchBikes()">
+                </div>
+
+                <!-- Filter Buttons Section -->
+                <div class="filter-container">
+                    <button onclick="filterBikes('all')">Show All</button>
+                    <button onclick="filterBikes('available')">Available</button>
+                    <button onclick="filterBikes('unavailable')">Unavailable</button>
+                </div>
+
+                <!-- Bike List Container -->
+                <div class="car-container" id="bikeList">
+                    {% for bike in bike %}
+                    <div class="car-item" data-availability="{{ bike.availability }}" data-brand="{{ bike.brand }}" data-model="{{ bike.model }}">
+
+                        <!-- Availability Status -->
+                        {% if bike.availability == 'Available' %}
+                            <div class="sold-out">Currently Available</div>
+                        {% else %}
+                            <div class="sold-out">Currently Unavailable</div>
+                        {% endif %}
+
+                        <!-- Bike Image -->
+                        <div class="car-image-container">
+                            {% if bike.image %}
+                                <img src="{{ bike.image.url }}" alt="{{ bike.brand }} {{ bike.model }}" class="car-image">
+                            {% else %}
+                                <img src="{% static 'default-placeholder.jpg' %}" alt="No Image Available" class="car-image">
+                            {% endif %}
+                        </div>
+
+                        <!-- Bike Details -->
+                        <div class="car-details">
+                            <h3><center>{{ bike.brand }}</center></h3>
+                            <div class="pair">
+                                <p><strong>Owner:</strong> {{ bike.usr.username }}</p>
+                                <p><strong>Email:</strong> {{ bike.usr.email }}</p>
+                            </div>
+                            <div class="pair">
+                                <p><strong>Model:</strong> {{ bike.model }}</p>
+                                <p><strong>Brand:</strong> {{ bike.brand }}</p>
+                            </div>
+
+                            <div class="pair">
+                                <p><strong>Rent Amount per day:</strong> {{ bike.rentamount }}</p>
+                                <p><strong>Year:</strong> {{ bike.year }}</p>
+                            </div>
+
+                            <div class="pair">
+                                <p><strong>Fuel:</strong> {{ bike.fuel }}</p>
+                                <p><strong>Kilometers:</strong> {{ bike.km }} km</p>
+                            </div>
+                            <div class="pair">
+                                <p><strong>Location:</strong> {{ bike.owner }}</p>
+                                <p><strong>Description:</strong> {{ bike.description }} km</p>
+                            </div>
+                            <a href="{% url 'booknowbikerent' bike.id %}" class="book-btn">Book Now</a>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p style="text-align:center; color:#888;">No bikes available to display.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Function to filter bikes based on availability
+        function filterBikes(status) {
+            var bikes = document.querySelectorAll('.car-item');
+
+            bikes.forEach(function(bike) {
+                var availability = bike.getAttribute('data-availability').toLowerCase();
+
+                if (status === 'all') {
+                    bike.style.display = 'block';
+                } else if (status === 'available' && availability === 'available') {
+                    bike.style.display = 'block';
+                } else if (status === 'unavailable' && availability === 'unavailable') {
+                    bike.style.display = 'block';
+                } else {
+                    bike.style.display = 'none';
+                }
+            });
+        }
+
+        // Function to search bikes by brand, model, or location
+        function searchBikes() {
+            var input = document.getElementById('searchInput').value.toLowerCase();
+            var bikes = document.querySelectorAll('.car-item');
+
+            bikes.forEach(function(bike) {
+                var brand = bike.getAttribute('data-brand').toLowerCase();
+                var model = bike.getAttribute('data-model').toLowerCase();
+
+                if (brand.includes(input) || model.includes(input)) {
+                    bike.style.display = "block"; // Show matching bike
+                } else {
+                    bike.style.display = "none"; // Hide non-matching bike
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
