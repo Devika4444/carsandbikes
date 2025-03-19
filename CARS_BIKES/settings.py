@@ -26,7 +26,7 @@ SECRET_KEY = 'pu9zv^0x(x!uqfhqqpl4&(u1g9j$1o%2a#4i&@j5o2_*%21qi*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['autoflex.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
