@@ -28,6 +28,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['autoflex.onrender.com', 'localhost', '127.0.0.1']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://autoflex.onrender.com',  # Add your domain here
+    'http://autoflex.onrender.com',   # Add http version as well if applicable
+]
+
+
 
 # Application definition
 
