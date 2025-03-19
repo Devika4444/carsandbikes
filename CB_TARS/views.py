@@ -1360,6 +1360,7 @@ def rejectinsterestedbuyers(request,bid):
     
     return HttpResponse(alert_message)
 
+
     
 
 def bikesell1(request):
@@ -1494,7 +1495,7 @@ def rejectinsterestedbikebuyers(request,bid):
     status='reject'
     booking.approval_status='reject'
     booking.save()
-    models.Approvedcarbuyers(buyer=buyer,bike=bike,status=status).save()
+    models.Approvedbikebuyers(buyer=buyer,bike=bike,status=status).save()
     alert_message = f"""
     <script>
         alert('The buyer is rejected');
@@ -1532,6 +1533,7 @@ def deluser3(request,id):
     d=carrent.objects.get(id=id)
     d.delete()
     return redirect('carrentlist')    
+  
 
 def edit_car1(request, id):
     car = carrent.objects.get(id=id)

@@ -168,7 +168,7 @@ urlpatterns = [
 
     path('carrent/',views.carrent1,name='carrent1'),
     path('carrentlist/',views.carrentlist,name='carrentlist'),
-    path("delcar_rent/<int:id>", views.deluser2, name='delcar_rent'),
+    path("deluser3/<int:id>", views.deluser3, name='deluser3'),
     path('bookcarrent/',views.bookcarrent,name='bookcarrent'),
     path('set_availability/<int:id>/',views.set_availability,name='set_availability'),
     path('booknowcarrent/<int:id>/', views.booknowcarrent, name='booknowcarrent'),
